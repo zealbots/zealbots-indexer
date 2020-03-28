@@ -13,3 +13,21 @@ Web importer of scientific articles from journal websites
 - [ ] Target platforms Chrome web store/ Firefox add-ons / Safari
 
 
+## Plan of action (preferred-order :))
+
+- [ ] Create a browser add-on (Chrome First / Firefox / Safari)
+- [ ] Recognize journal article details from a journal page
+- [ ] Fetch basic info
+    - [ ] Title
+    - [ ] DOI
+    - [ ] Atuhors
+    - [ ] Abstract
+    - [ ] Keywords
+    - [ ] Journal Name
+    - [ ] Journal ISSN
+ - [ ] Make a JSON
+ - [ ] Send a post request to api.zealbots.com to inject article
+ - [ ] Integerate with zealbots login
+ - [ ] Send articles to users target collections
+ - [ ] Publish into plugin stores
+ 

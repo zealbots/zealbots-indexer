@@ -1,0 +1,25 @@
+{
+
+  "description": "Article fetching into zealbot collection",
+  "manifest_version": 2,
+  "name": "zealbots-indexer",
+  "version": "1.0",
+
+  "icons": {
+    "48": "icons/logo.png"
+ },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "page_action": {
+    "default_icon": "icons/logo.png",
+    "browser_style": true
+  },
+  
+  "permissions": [
+    "activeTab",
+    "tabs"
+  ]
+}

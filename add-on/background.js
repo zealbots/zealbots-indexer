@@ -1,26 +1,13 @@
 const CSS = "body { border: 20px solid red; }";
-const TITLE_APPLY = "Apply CSS";
+const TITLE_APPLY = "zealbots-indexer";
 const TITLE_REMOVE = "Remove CSS";
 const APPLICABLE_PROTOCOLS = ["www.nature.com"];
 
-/*
-Have to build a scraping function
-*/
-function toggleCSS(tab) {
-
- /*
- have to get the source page 
- */ 
-}
-
-/*
-Returns true only if the URL's protocol is in APPLICABLE_PROTOCOLS.
-*/
 function protocolIsApplicable(url) {
   var anchor =  url.split('/')[2];
   return APPLICABLE_PROTOCOLS.includes(anchor);
 }
-
+  
 /*
 Initialize the page action: set icon and title, then show.
 Only operates on tabs whose URL's protocol is applicable.
@@ -53,4 +40,3 @@ browser.tabs.onUpdated.addListener((id, changeInfo, tab) => {
 /*
 Toggle CSS when the page action is clicked.
 */
-browser.pageAction.onClicked.addListener(toggleCSS);

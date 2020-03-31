@@ -15,8 +15,11 @@
 
   "page_action": {
     "default_icon": "icons/logo.png",
+    "default_popup": "popup.html",
     "browser_style": true
+
   },
+ 
   
   "permissions": [
     "activeTab",

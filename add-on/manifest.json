@@ -1,28 +1,21 @@
 {
+    "manifest_version": 2,
+    "description": "Zealbots-Indexer",
+    "version": "1.1,",
+    "name":"zealbots",
+    
+    "background": {
+        "scripts": ["bg.js"]
+      },
+    
+    "page_action":{
+        "default_icon": "logo.png",
+        "default_popup": "index.html"
+        
+    },
 
-  "description": "Article fetching into zealbot collection",
-  "manifest_version": 2,
-  "name": "zealbots-indexer",
-  "version": "1.0",
-
-  "icons": {
-    "48": "icons/logo.png"
- },
-
-  "background": {
-    "scripts": ["background.js"]
-  },
-
-  "page_action": {
-    "default_icon": "icons/logo.png",
-    "default_popup": "popup.html",
-    "browser_style": true
-
-  },
- 
-  
-  "permissions": [
-    "activeTab",
-    "tabs"
-  ]
+    "permissions": [
+        "activeTab",
+        "tabs"
+      ]
 }

@@ -7,7 +7,12 @@
     "background": {
         "scripts": ["bg.js"]
       },
-    
+    "content_scripts":[
+      {
+        "matches" : ["<all_urls>"],
+        "js":["cs.js"]
+      }
+    ],
     "page_action":{
         "default_icon": "logo.png",
         "default_popup": "index.html"

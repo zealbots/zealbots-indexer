@@ -1,0 +1,79 @@
+body{
+    background-color: #a7ffeb;
+    width: 300px;
+    overflow-x: hidden;
+}
+h1{
+    color: #161616;
+}
+.txt{
+    background-color: #ffffff;
+    font-family: sans-serif;
+    font-size: 15px;
+    text-align: center;
+    color: #000000;
+    margin:6px;
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    width: 80%;
+    align-content: center;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.txt:hover{
+    
+    background-color: #dadada;
+    font-family: sans-serif;
+    font-size: 15px;
+    text-align: center;
+    color: #000000;
+    margin:6px;
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    width: 80%;
+    align-content: center;
+    border-style: none;
+    border-radius: 10px;
+}
+.txt:focus{
+    
+    background-color: #161616;
+    font-family: sans-serif;
+    font-size: 15px;
+    text-align: center;
+    color: #ffffff;
+    margin:6px;
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    width: 80%;
+    align-content: center;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.btn{
+    margin:2px;
+    margin-top: 5%;
+    padding: 10px; 
+    font-family: sans-serif;
+    font-size: 15px;
+    width: 80%;
+    background-color: #ffffff;
+    border-style: none;
+    border-radius: 10px;
+}
+.btn:hover{
+    margin:2px;
+    margin-top: 5%;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 15px;
+    width: 80%;
+    background-color: #56ffcc;
+    border-style: none;
+    border-radius: 10px;
+}

@@ -1,13 +1,13 @@
 var title,doi,url;
-
+var urlBox = document.getElementById('url');
 function handleResponse(message){
-    alert(message.response);
+   urlBox.value = String(message.response);
 }
 function handleError(error) {
     console.log(`Error: ${error}`);
   }
 
-document.getElementById('notifiyMe').addEventListener('click', function(){
+document.getElementById('submit').addEventListener('click', function(){
     
     url = browser.runtime.sendMessage({
         requesting : "url"

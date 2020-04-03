@@ -1,7 +1,26 @@
 var title,doi,url;
-var urlBox = document.getElementById('url');
+var titleBox,doiBox,authorsBox,abstractBox,keywordsBox,nameBox,issnBox,urlBox;
+titleBox = document.getElementById('title');
+doiBox  = document.getElementById('doi');
+authorsBox  = document.getElementById('authors');
+abstractBox  = document.getElementById('abstract');
+keywordsBox  = document.getElementById('keywords');
+nameBox = document.getElementById('journal_name');
+issnBox = document.getElementById('journal_ISSN');
+urlBox = document.getElementById('url');
+
 function handleResponse(message){
-   urlBox.value = String(message.response);
+
+   url = String(message.response);
+   let urlSplit = url.split('/');
+   if( urlSplit[2] == 'www.nature.com' )
+   {
+       if(urlSplit[3] == 'articles'){
+           if(urlSplit[4] != '')
+                urlBox.value = url;
+       }
+   }
+
 }
 function handleError(error) {
     console.log(`Error: ${error}`);

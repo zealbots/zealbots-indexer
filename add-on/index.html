@@ -2,20 +2,66 @@
     <head>
         <Title>Zealbot Indexer</Title>
         <link rel="stylesheet" href="style.css">
+        
     </head>
     <body>
-        <center><h1>ZEALBOTS Indexer</h1></center>
+        <center><h1> ZEALBOTS Indexer</h1></center>
         <center>
-            <input type="text"  class= "txt" id="title" placeholder="Title" > <br>
-            <input type="text"  class= "txt" id="doi" placeholder="DOI" ><br>
-            <input type="text"  class= "txt" id="authors" placeholder="Authors" ><br>
-            <input type="text"  class= "txt" id="abstract" placeholder="Abstract"><br>
-            <input type="text"  class= "txt" id="keywords" placeholder="Keywords" ><br>
-            <input type="text"  class= "txt" id="journal_name" placeholder="Journal Name"><br>
-            <input type="text"  class= "txt" id="journal_ISSN" placeholder="Journal ISSN"><br>
-            <input type="text"  class= "txt" id="url" placeholder="URL" ><br>
-            <input class="btn"  id="submit" type="submit" value="Add to ZEALBOTS"></center>
-            <div id='message'></div>
+            <div class="floating-form">
+                <div class="floating-label">
+                    <input name="title" class="floating-input" type="text" id="title" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Title</label>
+                </div>
+                
+                <div class="floating-label">
+                    <input name="doi" class="floating-input" type="text" id="doi" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>DOI</label>
+                </div>
+               
+                <div class="floating-label">
+                    <input name="authors" class="floating-input" type="text" id="authors" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Authors</label>
+                </div>
+
+                <div class="floating-label">
+                    <input name="abstract" class="floating-input" type="text" id="abstract" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Abstract</label>
+                </div>
+                
+                <div class="floating-label">
+                    <input name="keywords" class="floating-input" type="text" id="keywords" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Keywords</label>
+                </div>
+
+                <div class="floating-label">
+                    <input name="journal_name" class="floating-input" type="text" id="journal_name" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Journal Name</label>
+                </div>
+                
+                <div class="floating-label">
+                    <input name="journal_ISSN" class="floating-input" type="text" id="journal_ISSN" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Journal ISSN</label>
+                </div>
+
+                <div class="floating-label">
+                    <input name="url" class="floating-input" type="text" id="url" readonly placeholder="" >
+                    <span class="highlight"></span>
+                    <label>URL</label>
+                </div>
+                <input class="btn" id="submit" type="submit" value="Add to ZEALBOTS">
+                
+                <div id='message'></div>
+            </div>
+        </center>
+        
         <script src="script.js"></script>
+        
     </body>
 </html>

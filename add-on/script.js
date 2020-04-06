@@ -1,22 +1,16 @@
+
 var title,url;
 var urlBox;
+
 urlBox = document.getElementById('url');
 
-function handleResponse(message){
-
-   
-
-}
 function handleError(error) {
     console.log(`Error: ${error}`);
   }
 
 document.getElementById('submit').addEventListener('click', function(){
-    
-  
+
 });
-
-
 
 
 
@@ -35,21 +29,47 @@ browser.runtime.onMessage.addListener(function(request, sender) {
       {
           if(urlSplit[3] == 'articles'){
               if(urlSplit[4] != ''){
+
+
+
                     //for getting multiple keywords
                     var elements = doc.getElementsByName('dc.subject');
                     var keys = '';
                     for(var i=0; i<elements.length; i++) {
                         keys += elements[i].content + ", ";
                     }
+                    if(doc.title != null){
+                      document.querySelector('#title').value = doc.title;
+                      removeAttr();
+                    }                     
+
+                    if(doc.querySelector('meta[name="DOI"]') != null)
+
+                      document.querySelector('#doi').value = doc.querySelector('meta[name="DOI"]').content;
+
+                    if(doc.querySelector('meta[name="dc.creator"]') != null)
+
+                      document.querySelector('#authors').value = doc.querySelector('meta[name="dc.creator"]').content;
+
+                    if(doc.querySelector('meta[name="dc.description"]') != null)
                     
-                    document.querySelector('#title').value = doc.title;
-                    document.querySelector('#doi').value = doc.querySelector('meta[name="DOI"]').content;
-                    document.querySelector('#authors').value = doc.querySelector('meta[name="dc.creator"]').content;
-                    document.querySelector('#abstract').value = doc.querySelector('meta[name="dc.description"]').content;
-                    document.querySelector('#keywords').value = keys;
-                    document.querySelector('#journal_name').value = doc.querySelector('meta[name="dc.publisher"]').content;
-                    document.querySelector('#journal_ISSN').value = doc.querySelector('span[itemprop="issn"]').innerText;
-                    document.querySelector('#url').value = doc.querySelector('meta[property="og:url"]').content;
+                      document.querySelector('#abstract').value = doc.querySelector('meta[name="dc.description"]').content;
+                    
+                    if(keys != null)
+
+                      document.querySelector('#keywords').value = keys;
+
+                    if(doc.querySelector('meta[name="dc.publisher"]') != null)
+
+                      document.querySelector('#journal_name').value = doc.querySelector('meta[name="dc.publisher"]').content;
+
+                    if(doc.querySelector('span[itemprop="issn"]').innerText != '')
+
+                      document.querySelector('#journal_ISSN').value = doc.querySelector('span[itemprop="issn"]').innerText;
+
+                    if(doc.querySelector('meta[property="og:url"]') != null)
+
+                      document.querySelector('#url').value = doc.querySelector('meta[property="og:url"]').content;
                     
                     message.innerText = ''
 
@@ -67,7 +87,7 @@ browser.runtime.onMessage.addListener(function(request, sender) {
     var message = document.querySelector('#message');
   
     browser.tabs.executeScript(null, {
-      file: "cs.js"
+      file: "meta.js"
     }, function() {
       // If you try and inject into an extensions page or the webstore/NTP you'll get an error
       if (browser.runtime.lastError) {
@@ -78,3 +98,16 @@ browser.runtime.onMessage.addListener(function(request, sender) {
   }
   
   window.onload = onWindowLoad;
+
+  //Function to remove readonly attribute
+
+  function removeAttr(){
+    document.querySelector('#title').removeAttribute('readonly');
+    document.querySelector('#doi').removeAttribute('readonly');
+    document.querySelector('#authors').removeAttribute('readonly');
+    document.querySelector('#abstract').removeAttribute('readonly');
+    document.querySelector('#keywords').removeAttribute('readonly');
+    document.querySelector('#journal_name').removeAttribute('readonly');
+    document.querySelector('#journal_ISSN').removeAttribute('readonly');
+    document.querySelector('#url').removeAttribute('readonly');
+  }

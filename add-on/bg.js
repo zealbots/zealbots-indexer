@@ -1,5 +1,6 @@
 var title = "ZealBots-Indexer";
-var urlAddress = ["www.google.com","www.facebook.com"];
+var urlAddress = ["www.nature.com"];
+var taburl;
 function protocolIsApplicable(url) {
   var array =  url.split('/');
   var a = array[2];
@@ -7,9 +8,11 @@ function protocolIsApplicable(url) {
 }
 function initializeBrowserAction(tab) {
   if (protocolIsApplicable(tab.url)) {
+    taburl = tab.url;
     browser.pageAction.setIcon({tabId: tab.id, path: "logo.png"});
     browser.pageAction.setTitle({tabId: tab.id, title: title});
     browser.pageAction.show(tab.id);
+    
   }
 }
 

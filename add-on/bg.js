@@ -29,4 +29,20 @@ function handleUpdated(tabId, changeInfo, tabInfo) {
     initializeBrowserAction(tabInfo);
 }
 
+
 browser.tabs.onUpdated.addListener(handleUpdated);
+
+// sending to popup
+
+function handleMessage(request, sender, sendResponse){
+
+  if(request.requesting == "url"){
+      
+      sendResponse({response :taburl});
+
+  }
+
+
+
+}
+browser.runtime.onMessage.addListener(handleMessage);

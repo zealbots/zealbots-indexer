@@ -1,15 +1,30 @@
-var title,url;
-var urlBox;
-
-urlBox = document.getElementById('url');
-
-function handleError(error) {
-    console.log(`Error: ${error}`);
-  }
+var url;
 
 document.getElementById('submit').addEventListener('click', function(){
 
 });
+
+  
+//Title handle response
+
+function urlHandleResponse(message){
+  url = String(message.response);
+}
+
+function handleError(error) {
+  console.log(`Error: ${error}`);
+}
+
+url = browser.runtime.sendMessage({
+    requesting : "url"
+});
+url.then(urlHandleResponse, handleError);
+
+
+
+
+
+
 
 //scraping section
 
@@ -18,7 +33,6 @@ browser.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       var doc = new DOMParser().parseFromString(request.source, "text/html");
 
-      url = String(doc.querySelector('meta[property="og:url"]').content);
       let urlSplit = url.split('/');
 
       // nature block
@@ -90,3 +104,5 @@ browser.runtime.onMessage.addListener(function(request, sender) {
     document.querySelector('#journal_ISSN').removeAttribute('readonly');
     document.querySelector('#url').removeAttribute('readonly');
   }
+
+

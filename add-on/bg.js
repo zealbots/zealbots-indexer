@@ -1,10 +1,9 @@
 var title = "ZealBots-Indexer";
-var urlAddress = ["www.nature.com"];
+var urlAddress = ["nature", "biomedcentral", "wiley"];
 var taburl;
 function protocolIsApplicable(url) {
-  var array =  url.split('/');
-  var a = array[2];
-  return urlAddress.includes(a);
+  var array =  url.split('/')[2].split('.')[1];
+  return urlAddress.includes(array);
 }
 function initializeBrowserAction(tab) {
   if (protocolIsApplicable(tab.url)) {
@@ -12,14 +11,14 @@ function initializeBrowserAction(tab) {
     browser.pageAction.setIcon({tabId: tab.id, path: "logo.png"});
     browser.pageAction.setTitle({tabId: tab.id, title: title});
     browser.pageAction.show(tab.id);
-    
   }
 }
 
 function initializer(tabs){
-    for (let tab of tabs) {
-            initializeBrowserAction(tab);
-          }
+    
+  for (let tab of tabs) {
+    initializeBrowserAction(tab);
+    }
 }
 
 var gettingAllTabs = browser.tabs.query({});
@@ -29,20 +28,15 @@ function handleUpdated(tabId, changeInfo, tabInfo) {
     initializeBrowserAction(tabInfo);
 }
 
-
 browser.tabs.onUpdated.addListener(handleUpdated);
 
 // sending to popup
-
 function handleMessage(request, sender, sendResponse){
 
-  if(request.requesting == "url"){
-      
+  if(request.requesting == "url"){      
       sendResponse({response :taburl});
 
   }
-
-
 
 }
 browser.runtime.onMessage.addListener(handleMessage);

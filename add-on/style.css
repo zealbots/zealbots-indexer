@@ -19,6 +19,7 @@ h1{
     width: 80%;
     background-color: #ffffff;
     border-style: none;
+    border: 1px solid #154360;
     border-radius: 10px;
 }
 .btn:hover{

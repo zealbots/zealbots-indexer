@@ -1,7 +1,4 @@
 var url;
-document.getElementById('submit').addEventListener('click', function(){
-
-});
   
 //Title handle response
 
@@ -235,3 +232,7 @@ browser.runtime.onMessage.addListener(function(request, sender) {
     document.querySelector('#volume').removeAttribute('readonly');
     document.querySelector('#issue').removeAttribute('readonly');
 }
+
+document.getElementById('submit').addEventListener('click', function(){
+
+});

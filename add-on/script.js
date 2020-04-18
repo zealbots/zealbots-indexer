@@ -1,5 +1,6 @@
 var url;
-  
+var data;
+
 //Title handle response
 
 function urlHandleResponse(message){
@@ -55,11 +56,8 @@ browser.runtime.onMessage.addListener(function(request, sender) {
               authors += auth_elements[i].content + ", ";
           }
 
-          if(doc.title != null) {
-            zeal_title = doc.title;
-            removeAttr();
-          }                     
-
+          if(doc.querySelector('meta[name="dc.title"]') != null)
+            zeal_title = doc.querySelector('meta[name="dc.title"]').content;
           if(doc.querySelector('meta[name="DOI"]') != null)
             zeal_DOI = doc.querySelector('meta[name="DOI"]').content;
           if(authors != null)
@@ -165,7 +163,7 @@ browser.runtime.onMessage.addListener(function(request, sender) {
          }
 
         // values to be sent API
-        var data = {
+        data = {
           'pub_type' : zeal_pubType,
           'journal' : zeal_Name, 
           'access_type' : "",
@@ -233,6 +231,24 @@ browser.runtime.onMessage.addListener(function(request, sender) {
     document.querySelector('#issue').removeAttribute('readonly');
 }
 
-document.getElementById('submit').addEventListener('click', function(){
 
+document.getElementById('submit').addEventListener('click', function(){
+    
+  
+    data.email = document.querySelector('#email').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://127.0.0.1:8000/', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+
+        document.querySelector('#body').remove();
+        document.querySelector('#message').innerHTML += 
+        '<div><img style="width: 250px" src="thank_you_bot.png"></div> <div style="color:#196f3d"><strong> ' + JSON.parse(this.responseText) + '</strong></div>';
+      }
+    }
+
+    xhr.send(JSON.stringify(data));  
 });

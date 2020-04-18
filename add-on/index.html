@@ -1,5 +1,6 @@
 <html>
     <head>
+    
         <Title>Zealbot Indexer</Title>
         <link rel="stylesheet" href="style.css">
         
@@ -7,15 +8,16 @@
     <body>
         <center><h1> ZEALBOTS Indexer</h1></center>
         <center>
-            <div class="floating-form">
+            <div class="floating-form" id="body" onsubmit="return validateForm()">
+
                 <div class="floating-label">
-                    <input name="title" class="floating-input" type="text" id="title" required readonly placeholder="" >
+                    <input required name="title" class="floating-input" type="text" id="title"  readonly placeholder="" >
                     <span class="highlight"></span>
                     <label>Title</label>
                 </div>
                 
                 <div class="floating-label">
-                    <input name="doi" class="floating-input" type="text" id="doi" required readonly placeholder="" >
+                    <input required name="doi" class="floating-input" type="text" id="doi"  readonly placeholder="" >
                     <span class="highlight"></span>
                     <label>DOI</label>
                 </div>
@@ -51,10 +53,16 @@
                     <label>Issue</label>
                 </div>
 
+                <div class="floating-label">
+                    <input name="email" class="floating-input" type="text" id="email"  placeholder="" >
+                    <span class="highlight"></span>
+                    <label>Email for notify </label>
+                </div>
+
                 <input class="btn" id="submit" type="submit" value="Add to COLLECTION">
                 
-                <div id='message'></div>
             </div>
+            <div id='message'></div>
         </center>
         
         <script src="script.js"></script>

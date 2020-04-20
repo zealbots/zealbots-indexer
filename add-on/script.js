@@ -57,7 +57,12 @@ browser.runtime.onMessage.addListener(function(request, sender) {
           }
 
           if(doc.querySelector('meta[name="dc.title"]') != null)
+          {
+            removeAttr();
             zeal_title = doc.querySelector('meta[name="dc.title"]').content;
+          }
+            
+            
           if(doc.querySelector('meta[name="DOI"]') != null)
             zeal_DOI = doc.querySelector('meta[name="DOI"]').content;
           if(authors != null)
@@ -100,8 +105,12 @@ browser.runtime.onMessage.addListener(function(request, sender) {
               authors += auth_elements[i].content + ", ";
           }
 
-          if(doc.querySelector('meta[name="dc.title"]') != null)
+          if(doc.querySelector('meta[name="dc.title"]') != null){
+            removeAttr();
             zeal_title = doc.querySelector('meta[name="dc.title"]').content;
+          }
+            
+            
           if(doc.querySelector('meta[name="DOI"]') != null)
             zeal_DOI = doc.querySelector('meta[name="DOI"]').content;
           if(authors != null)
@@ -140,8 +149,11 @@ browser.runtime.onMessage.addListener(function(request, sender) {
               authors += auth_elements[i].content + ", ";
           }
 
-          if(doc.querySelector('meta[property="og:title"]') != null)
+          if(doc.querySelector('meta[property="og:title"]') != null){
+            removeAttr();
             zeal_title = doc.querySelector('meta[property="og:title"]').content;
+          }
+            
           if(doc.querySelector('meta[name="citation_doi"]') != null)
             zeal_DOI = doc.querySelector('meta[name="citation_doi"]').content;
           if(authors != null)

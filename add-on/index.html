@@ -8,6 +8,7 @@
     <body>
         <center><h1> ZEALBOTS Indexer</h1></center>
         <center>
+            <form action="">
             <div class="floating-form" id="body" onsubmit="return validateForm()">
 
                 <div class="floating-label">
@@ -54,15 +55,16 @@
                 </div>
 
                 <div class="floating-label">
-                    <input name="email" class="floating-input" type="text" id="email"  placeholder="" >
+                    <input name="email" class="floating-input" type="text" id="email" required  placeholder="" >
                     <span class="highlight"></span>
                     <label>Email for notify </label>
                 </div>
 
-                <input class="btn" id="submit" type="submit" value="Add to COLLECTION">
+                <input class="btn" id="submit" type="submit" value="Add to COLLECTION" >
                 
             </div>
             <div id='message'></div>
+        </form>
         </center>
         
         <script src="script.js"></script>

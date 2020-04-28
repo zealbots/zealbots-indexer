@@ -245,12 +245,12 @@ browser.runtime.onMessage.addListener(function(request, sender) {
 
 
 document.getElementById('submit').addEventListener('click', function(){
-
-  document.querySelector('#body').style.display = 'none';
-  document.querySelector('#login_submit').removeAttribute('style');
-  document.querySelector('#message').innerHTML +=
+	if(document.getElementById('form')[0].checkValidity()){
+		document.querySelector('#body').style.display = 'none';
+		document.querySelector('#login_submit').removeAttribute('style');
+		document.querySelector('#message').innerHTML +=
       '<div class="floating-label"><input required name="username" class="floating-input" type="text" id="username" placeholder="" ><span class="highlight"></span><label>Username</label></div><div class="floating-label"><input required name="password" class="floating-input" type="text" id="password" placeholder=""><span class="highlight"></span><label>Password</label></div>';
-});
+	}});
 
 
 document.getElementById('login_submit').addEventListener('click', function(){

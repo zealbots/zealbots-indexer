@@ -245,22 +245,45 @@ browser.runtime.onMessage.addListener(function(request, sender) {
 
 
 document.getElementById('submit').addEventListener('click', function(){
-    
-  
-    data.email = document.querySelector('#email').value;
 
+  document.querySelector('#body').style.display = 'none';
+  document.querySelector('#login_submit').removeAttribute('style');
+  document.querySelector('#message').innerHTML +=
+      '<div class="floating-label"><input required name="username" class="floating-input" type="text" id="username" placeholder="" ><span class="highlight"></span><label>Username</label></div><div class="floating-label"><input required name="password" class="floating-input" type="text" id="password" placeholder=""><span class="highlight"></span><label>Password</label></div>';
+});
+
+
+document.getElementById('login_submit').addEventListener('click', function(){
+
+    var username = new String(document.querySelector('#username').value);
+    var password = new String(document.querySelector('#password').value);
+  
+    user_data = {
+      'email' : username,
+      'password' : password
+    };
+  
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'http://127.0.0.1:8000/', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-
+  
     xhr.onreadystatechange = function() { // Call a function when the state changes.
+      
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 
-        document.querySelector('#body').remove();
-        document.querySelector('#message').innerHTML += 
-        '<div><img style="width: 250px" src="thank_you_bot.png"></div> <div style="color:#196f3d"><strong> ' + JSON.parse(this.responseText) + '</strong></div>';
+        xhr.open("POST", 'http://127.0.0.1:8000/login/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+      
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            document.querySelector('#message').innerHTML += "";
+            document.querySelector('#message').innerHTML +=
+            '<div><img style="width: 250px" src="thank_you_bot.png"></div> <div style="color:#196f3d"><strong> ' + JSON.parse(this.responseText) + '</strong></div>';
+          }
+        }
+        xhr.send(JSON.stringify(data)); 
       }
     }
-
-    xhr.send(JSON.stringify(data));  
-});
+    xhr.send(JSON.stringify(user_data));
+  })
+  

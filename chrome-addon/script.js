@@ -2,27 +2,42 @@ var url;
 var data;
 
 //Title handle response
-
-function urlHandleResponse(message){
-  url = String(message.response);
+function reqListener () {
+values_return = JSON.parse(this.responseText);
+collection_count = values_return.count;
+collection_names = "";
+var ele = document.getElementById('sel');
+if(collection_count == 0){
+  '<option value="' + collection_count + '">' + 'Create New collection' + '</option>';
 }
 
-function handleError(error) {
-  console.log(`Error: ${error}`);
+else{
+  for (var i = 0; i < collection_count; i++) {
+    // POPULATE SELECT ELEMENT WITH JSON.
+    ele.innerHTML = ele.innerHTML +
+        '<option value="' + [values_return.data[i].id, values_return.data[i].name, "Aswin"]+ '">' + values_return.data[i].name + '</option>';
+    }  
+}
 }
 
-url = browser.runtime.sendMessage({
-    requesting : "url"
-});
-url.then(urlHandleResponse, handleError);
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener);
+oReq.open("GET", "https://api.zealbots.com/api/v1/citeman/?Key=9406e1c9d5bbaf5e75612f64cdffd8b3f56e1015");
+oReq.send();
+
+chrome.runtime.sendMessage(
+  {requesting : "url"},
+  function(message){
+    url = String(message.response);
+  }
+);
 
 
-//scraping section
-browser.runtime.onMessage.addListener(function(request, sender) {
+chrome.runtime.onMessage.addListener(function(request, sender) {
     
     if (request.action == "getSource") {
       var doc = new DOMParser().parseFromString(request.source, "text/html");   
-      let urlSplit = url.split('/');
+      var urlSplit = url.split('/');
 
       var zeal_title = "" ;// article title 
       var zeal_DOI = "";
@@ -37,23 +52,22 @@ browser.runtime.onMessage.addListener(function(request, sender) {
       var zeal_pageNumber = "";
       var zeal_pdfLink = "";
       var zeal_pubType = "";
-      var zeal_impactFactor = "";
 
 
       // nature block
       if( urlSplit[2].split('.')[1] == 'nature' &&  urlSplit[3] == 'articles') {
           //for getting multiple keywords        
           var key_elements = doc.getElementsByName('dc.subject');
-          var keys = '';
+          var keys = [];
           for(var i=0; i<key_elements.length; i++) {
-              keys += key_elements[i].content + ", ";
+              keys.push(key_elements[i].content);
           }
 
           //for getting multiple authors        
           var auth_elements = doc.getElementsByName('dc.creator');
-          var authors = '';
+          var authors = [];
           for(var i=0; i<auth_elements.length; i++) {
-              authors += auth_elements[i].content + ", ";
+              authors.push(auth_elements[i].content);
           }
 
           if(doc.querySelector('meta[name="dc.title"]') != null)
@@ -93,16 +107,16 @@ browser.runtime.onMessage.addListener(function(request, sender) {
 
           //for getting multiple keywords        
           var key_elements = doc.getElementsByName('dc.subject');
-          var keys = '';
+          var keys = [];
           for(var i=0; i<key_elements.length; i++) {
-              keys += key_elements[i].content + ", ";
+              keys.push(key_elements[i].content);
           }
 
           // //for getting multiple authors        
           var auth_elements = doc.getElementsByName('dc.creator');
-          var authors = '';
+          var authors = [];
           for(var i=0; i<auth_elements.length; i++) {
-              authors += auth_elements[i].content + ", ";
+              authors.push(auth_elements[i].content);
           }
 
           if(doc.querySelector('meta[name="dc.title"]') != null){
@@ -138,15 +152,15 @@ browser.runtime.onMessage.addListener(function(request, sender) {
         if( urlSplit[2].split('.')[1] == 'wiley' &&  urlSplit[3] == 'doi') {
           //for getting multiple keywords 
           var key_elements = doc.getElementsByName('citation_keywords');
-          var keys = '';
+          var keys = [];
           for(var i=0; i<key_elements.length; i++) {
-              keys += key_elements[i].content + ", ";
+              keys.push(key_elements[i].conten);
           }
           //for getting multiple authors   
           var auth_elements = doc.getElementsByName('citation_author');
-          var authors = '';
+          var authors = [];
           for(var i=0; i<auth_elements.length; i++) {
-              authors += auth_elements[i].content + ", ";
+              authors.push(auth_elements[i].content);
           }
 
           if(doc.querySelector('meta[property="og:title"]') != null){
@@ -173,37 +187,24 @@ browser.runtime.onMessage.addListener(function(request, sender) {
           if(doc.querySelector('meta[name="citation_pdf_url"]') != null)
             zeal_pdfLink = doc.querySelector('meta[name="citation_pdf_url"]').content;  
          }
-
         // values to be sent API
         data = {
-          'pub_type' : zeal_pubType,
-          'journal' : zeal_Name, 
-          'access_type' : "",
-          'journal_issn' : zeal_ISSN,  
-          'impact_factor' : zeal_impactFactor,
-          'journal_dictionary' : "",
-          'doi' : zeal_DOI,
-          'pmid' : "",
-          'citation_details' : "",
-          'pmc' : "",
-          'title' : zeal_title,
-          'authors' : zeal_authors, 
-          'corresponding_author' : "",
-          'volume' : zeal_volume,
-          'issue' : zeal_issue,
-          'pagenum' : zeal_pageNumber,
-          'date_published' : zeal_pubDate,
-          'date_received' : "" ,
-          'date_accepted' : "" ,
-          'abstract_text' : zeal_abstract,
-          'keywords' : zeal_keywords,
-          'pdf_url' : zeal_pdfLink,
-          'html_url' : url
+          // "pub_type" : zeal_pubType,
+          "journal" : zeal_Name, 
+          "journal_issn" : zeal_ISSN,  
+          "doi" : zeal_DOI,
+          "title" : zeal_title,
+          "authors" : zeal_authors, 
+          "volume" : zeal_volume,
+          "issue" : zeal_issue,
+          "pagenum" : zeal_pageNumber,
+          "pub_date" : zeal_pubDate,
+          "abstract" : zeal_abstract,
+          "keywords" : zeal_keywords,
+          "pdf_url" : zeal_pdfLink,
+          "html_url" : url
         };
 
-        // post this data to API
-
-        // display properties
         document.querySelector('#title').value = zeal_title;
         document.querySelector('#doi').value = zeal_DOI;
         document.querySelector('#authors').value = zeal_authors;
@@ -217,16 +218,9 @@ browser.runtime.onMessage.addListener(function(request, sender) {
   });
   
   function onWindowLoad() {
-  
-    var message = document.querySelector('#message');
-  
-    browser.tabs.executeScript(null, {
+    var message = document.querySelector('#message');  
+    chrome.tabs.executeScript({
       file: "meta.js"
-    }, function() {
-      // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-      if (browser.runtime.lastError) {
-        message.innerText = 'There was an error injecting script : \n' + browser.runtime.lastError.message;
-      }
     });
   }
   
@@ -245,45 +239,29 @@ browser.runtime.onMessage.addListener(function(request, sender) {
 
 
 document.getElementById('submit').addEventListener('click', function(){
-	if(document.getElementById('form')[0].checkValidity()){
-		document.querySelector('#body').style.display = 'none';
-		document.querySelector('#login_submit').removeAttribute('style');
-		document.querySelector('#message').innerHTML +=
-      '<div class="floating-label"><input required name="username" class="floating-input" type="text" id="username" placeholder="" ><span class="highlight"></span><label>Username</label></div><div class="floating-label"><input required name="password" class="floating-input" type="text" id="password" placeholder=""><span class="highlight"></span><label>Password</label></div>';
-	}});
 
-
-document.getElementById('login_submit').addEventListener('click', function(){
-
-    var username = new String(document.querySelector('#username').value);
-    var password = new String(document.querySelector('#password').value);
-  
-    user_data = {
-      'email' : username,
-      'password' : password
+    var e = document.getElementById("sel");
+    var result = e.options[e.selectedIndex].value;
+    var splitString = result.split(",");
+    actual_data = {"id" : "36","name" : "sample_2","author" : "Aswink","category" : "Article","article" : {"title" : ";ldfk;3ldfkgdfControversialfdg cave discoveries suggest humans reached Americas much earlier than thought","doi" : "10.10383/d41586-dfg;ldkfgldfgdfg020-02190-y","journal" : "Na3turedf;lgl;dfdfgdfgkg","volume" : "103dfg","issue" : "144","pub_date":"2020-02-02","html_url" : "hfgdfgature.com/articles/d41586-020-02190-y","authors" : ["Cdfgdfgfgdfolindfdfgf Barras"],"journal_issn" : "1235-59dfgff53","pagenum" : "1as","abstract" : "ljdfgffgglkdjfgklfdgorem nu varum la antha etext","keywords" : ["sskljdfkldgf", "ksdfgdldfgfjklsdjfdfg"],"pdf_url" : "sssdfsfdfsdfklsjfskldjfslkdfgdf"}}
+    actual_data = {
+      "id" : splitString[0],
+      "name" : splitString[1],
+      "author" : splitString[1],
+      "category" : "Article",
+      "article" : data
     };
-  
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://127.0.0.1:8000/', true);
+    xhr.open("POST", 'https://api.zealbots.com/api/v1/citeman/update/?Key=9406e1c9d5bbaf5e75612f64cdffd8b3f56e1015', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-  
     xhr.onreadystatechange = function() { // Call a function when the state changes.
-      
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-
-        xhr.open("POST", 'http://127.0.0.1:8000/login/', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-      
-        xhr.onreadystatechange = function() { // Call a function when the state changes.
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            document.querySelector('#message').innerHTML += "";
-            document.querySelector('#message').innerHTML +=
-            '<div><img style="width: 250px" src="thank_you_bot.png"></div> <div style="color:#196f3d"><strong> ' + JSON.parse(this.responseText) + '</strong></div>';
-          }
+        document.querySelector('#body').style.display = 'none';
+        return_message = JSON.parse(this.responseText)
+        document.querySelector('#message').innerHTML += "";
+        document.querySelector('#message').innerHTML +=
+        '<div><img style="width: 250px" src="thank_you_bot.png"></div> <div style="color:#196f3d"><strong> ' + return_message.message +"   In  " + actual_data.name + '</strong></div>';
         }
-        xhr.send(JSON.stringify(data)); 
       }
-    }
-    xhr.send(JSON.stringify(user_data));
-  })
-  
+    xhr.send(JSON.stringify(actual_data));    
+  });

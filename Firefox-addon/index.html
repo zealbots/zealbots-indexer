@@ -3,22 +3,21 @@
     
         <Title>Zealbot Indexer</Title>
         <link rel="stylesheet" href="style.css">
-        
     </head>
+    
     <body>
         <center><h1> ZEALBOTS Indexer</h1></center>
         <center>
-            <form id="form" action="">
             <div class="floating-form" id="body">
 
                 <div class="floating-label">
-                    <input required name="title" class="floating-input" type="text" id="title"  readonly placeholder="" >
+                    <input  required name="title" class="floating-input" type="text" id="title"  readonly placeholder="" >
                     <span class="highlight"></span>
                     <label>Title</label>
                 </div>
                 
                 <div class="floating-label">
-                    <input required name="doi" class="floating-input" type="text" id="doi"  readonly placeholder="" >
+                    <input required  name="doi" class="floating-input" type="text" id="doi"  readonly placeholder="" >
                     <span class="highlight"></span>
                     <label>DOI</label>
                 </div>
@@ -53,22 +52,14 @@
                     <span class="highlight"></span>
                     <label>Issue</label>
                 </div>
-
-                <div class="floating-label" style="display: none;">
-                    <input name="email" class="floating-input" type="text" id="email" required  placeholder="" >
-                    <span class="highlight"></span>
-                    <label>Email for notify </label>
-                </div>
-
+                <select id="sel">
+                    <option value="">-- Select --</option>
+                </select>
+                
                 <input class="btn" id="submit" type="submit" value="ADD to COLLECTION" >
                 
-            </div></form>
-			<form>
-            <div id='message'>
-                <div class="floating-form" id="login_body"></div>
             </div>
-            <input class="btn" id="login_submit" type="submit" value="LOGIN to ZEALBOTS" style="display: none;">
-			</form>
+            <div id="message"></div>
         </center>
         
         <script src="script.js"></script>
